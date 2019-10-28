@@ -5,10 +5,10 @@
  * @license    This project is released under the BSD-3-Clause License.
  */
 
-#include "ros/ros.h"
-#include "std_msgs/String.h"
-
 #include <sstream>
+#include "std_msgs/String.h"
+#include "ros/ros.h"
+
 
 int main(int argc, char **argv) {
 

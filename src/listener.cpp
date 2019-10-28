@@ -5,8 +5,8 @@
  * @license    This project is released under the BSD-3-Clause License.
  */
 
-#include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "ros/ros.h"
 
  /**
  * @brief Callback function to print chatter topic messages to the terminal
