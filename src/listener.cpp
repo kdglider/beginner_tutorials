@@ -14,7 +14,7 @@
  * @return None
  */
 void chatterCallback(const std_msgs::String::ConstPtr& msg) {
-    ROS_INFO("Message read: [%s]", msg->data.c_str());
+    ROS_INFO_STREAM("Read by listener: [" << msg->data.c_str() << "]");
 }
 
 int main(int argc, char **argv) {

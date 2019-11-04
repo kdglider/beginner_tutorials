@@ -22,8 +22,8 @@ std::string serviceMsg = "Default Message";
 bool printString(beginner_tutorials::printString::Request  &req, beginner_tutorials::printString::Response &res) {
     res.returnMsg = "This ROS service exists to serve the master: " + req.name;
     serviceMsg = res.returnMsg;
-    ROS_INFO_STREAM("Request: name = " + req.name);
-    ROS_INFO_STREAM("Response Preview: returnMsg = " + res.returnMsg);
+    ROS_DEBUG_STREAM("Request: name = " + req.name);
+    ROS_DEBUG_STREAM("Response Preview: returnMsg = " + res.returnMsg);
     return 1;
 }
 
@@ -33,6 +33,17 @@ int main(int argc, char **argv) {
     // Record publishing rate input from user (Hz)
     int pubRate = atoi(argv[1]);
 
+    // Log warnings or errors if the publishing rate is too fast or negative
+    if (pubRate > 1000) {
+        ROS_ERROR_STREAM("Publishing rate over 1000 Hz detected (WAY too fast)");
+    } 
+    else if (pubRate > 100) {
+        ROS_WARN_STREAM("Publishing rate over 100 Hz detected (may be too fast)");
+    }
+    else if (pubRate <= 0) {
+        ROS_FATAL_STREAM("Negative publishing rate detected");
+    }
+
     // Create node handle and publisher to publish to chatter topic
     ros::NodeHandle n;
     ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
@@ -40,8 +51,8 @@ int main(int argc, char **argv) {
     // Set publishing rate 
     ros::Rate loop_rate(pubRate);
 
+    // Create service and advertise it over ROS
     ros::ServiceServer service = n.advertiseService("printString", printString);
-    beginner_tutorials::printString srv;
 
     // Counter to keep track of the number of published messages
     int count = 0;
@@ -56,7 +67,7 @@ int main(int argc, char **argv) {
         msg.data = ss.str();
 
         // Print message string to terminal
-        ROS_INFO_STREAM(msg.data.c_str());
+        ROS_INFO_STREAM("Published by talker: [" << msg.data.c_str() << "]");
 
         // Publish message
         chatter_pub.publish(msg);
