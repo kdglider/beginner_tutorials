@@ -8,16 +8,26 @@
 #include <sstream>
 #include "std_msgs/String.h"
 #include "ros/ros.h"
+#include "beginner_tutorials/printString.h"
 
-// bool add(beginner_tutorials::AddTwoInts::Request  &req, beginner_tutorials::AddTwoInts::Response &res) {
-//   res.sum = req.a + req.b;
-//   ROS_INFO("request: x=%ld, y=%ld", (long int)req.a, (long int)req.b);
-//   ROS_INFO("sending back response: [%ld]", (long int)res.sum);
-//   return true;
-// }
+// String that will be published and modified by the printString service
+std::string serviceMsg = "Default Message";
+
+/**
+ * @brief printString service callback function that returns a sentence with the name given in the request
+ * @param req Service request
+ * @param res Service response
+ * @return None
+ */
+bool printString(beginner_tutorials::printString::Request  &req, beginner_tutorials::printString::Response &res) {
+    res.returnMsg = "This ROS service exists to serve the master: " + req.name;
+    serviceMsg = res.returnMsg;
+    ROS_INFO_STREAM("Request: name = " + req.name);
+    ROS_INFO_STREAM("Response Preview: returnMsg = " + res.returnMsg);
+    return 1;
+}
 
 int main(int argc, char **argv) {
-
     ros::init(argc, argv, "talker");
 
     // Create node handle and publisher to publish to chatter topic
@@ -27,7 +37,8 @@ int main(int argc, char **argv) {
     // Set publishing rate to 10 Hz
     ros::Rate loop_rate(10);
 
-    //ros::ServiceServer service = n.advertiseService("add_two_ints", add);
+    ros::ServiceServer service = n.advertiseService("printString", printString);
+    beginner_tutorials::printString srv;
 
     // Counter to keep track of the number of published messages
     int count = 0;
@@ -36,11 +47,13 @@ int main(int argc, char **argv) {
         // Create String message to publish
         std_msgs::String msg;
         std::stringstream ss;
-        ss << "Number of published messages: " << count;
+    
+        // Update stringstream and String msg objects
+        ss << serviceMsg << ", Count: " << count;
         msg.data = ss.str();
 
         // Print message string to terminal
-        ROS_INFO_STREAM("%s", msg.data.c_str());
+        ROS_INFO_STREAM(msg.data.c_str());
 
         // Publish message
         chatter_pub.publish(msg);
@@ -49,7 +62,7 @@ int main(int argc, char **argv) {
 
         // Pause the program until it is time to publish again
         loop_rate.sleep();
-        ++count;
+        count++;
     }
 
     return 0;

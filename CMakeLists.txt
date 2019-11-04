@@ -5,9 +5,22 @@ project(beginner_tutorials)
 add_compile_options(-std=c++11)
 
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  std_msgs
+    roscpp
+    rospy
+    std_msgs
+    message_generation
+)
+
+# Generate services in the 'srv' folder
+add_service_files(
+    FILES
+    printString.srv
+)
+
+# Generate added messages and services with any dependencies listed here
+generate_messages(
+    DEPENDENCIES
+    std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
