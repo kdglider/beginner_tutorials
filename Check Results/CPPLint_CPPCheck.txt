@@ -1,14 +1,20 @@
 CPPLint
 $ cpplint *.cpp
 Done processing listener.cpp
-talker.cpp:14:  Redundant blank line at the start of a code block should be deleted.  [whitespace/blank_line] [2]
+talker.cpp:14:  Static/global string variables are not permitted.  [runtime/string] [4]
+talker.cpp:22:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+talker.cpp:22:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::printString::Request  &req  [runtime/references] [2]
+talker.cpp:22:  Is this a non-const reference? If so, make const or use a pointer: beginner_tutorials::printString::Response &res  [runtime/references] [2]
+talker.cpp:38:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+talker.cpp:40:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
 Done processing talker.cpp
-Total errors found: 1
+Total errors found: 6
+
 
 CPPCheck
 $ cppcheck --enable=all --std=c++11 -I include/ --suppress=missingIncludeSystem $( find . -name *.cpp | grep -vE -e "^./build/" -e "^./vendor/" )
 Checking src/listener.cpp...
-1/2 files checked 39% done
+1/2 files checked 24% done
 Checking src/talker.cpp...
 2/2 files checked 100% done
 (information) Cppcheck cannot find all the include files (use --check-config for details)

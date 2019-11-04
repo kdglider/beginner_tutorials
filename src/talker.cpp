@@ -36,11 +36,9 @@ int main(int argc, char **argv) {
     // Log warnings or errors if the publishing rate is too fast or negative
     if (pubRate > 1000) {
         ROS_ERROR_STREAM("Publishing rate over 1000 Hz detected (WAY too fast)");
-    } 
-    else if (pubRate > 100) {
+    } else if (pubRate > 100) {
         ROS_WARN_STREAM("Publishing rate over 100 Hz detected (may be too fast)");
-    }
-    else if (pubRate <= 0) {
+    } else if (pubRate <= 0) {
         ROS_FATAL_STREAM("Negative publishing rate detected");
     }
 
@@ -48,7 +46,7 @@ int main(int argc, char **argv) {
     ros::NodeHandle n;
     ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
-    // Set publishing rate 
+    // Set publishing rate
     ros::Rate loop_rate(pubRate);
 
     // Create service and advertise it over ROS
@@ -61,7 +59,7 @@ int main(int argc, char **argv) {
         // Create String message to publish
         std_msgs::String msg;
         std::stringstream ss;
-    
+
         // Update stringstream and String msg objects
         ss << serviceMsg << ", Count: " << count;
         msg.data = ss.str();
