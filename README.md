@@ -16,9 +16,13 @@ source devel/setup.bash
 ```
 
 ## Run Instructions
-Open two more terminal windows. In window 1, run:
-```roscore```
+Open one more terminal windows. In window 1, run:
+```
+roslaunch beginner_tutorials talkerListener.launch pubRate:=X
+```
+where X is a positive integer for the publishing rate in Hertz.
 In window 2, run:
-```rosrun beginner_tutorials talker```
-In window 3, run:
-```rosrun beginner_tutorials listener```
+```
+rosservice call /printString name
+```
+where name is any desired string.
