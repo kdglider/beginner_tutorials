@@ -2,7 +2,7 @@
  * @file       listener.cpp
  * @date       10/27/2019
  * @brief      Simple ROS subscriber from the beginner tutorials
- * @license    This project is released under the BSD-3-Clause License.
+ * @license    This project is released under the BSD-3-Clause License. See full details in LICENSE.
  */
 
 #include "std_msgs/String.h"
