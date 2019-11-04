@@ -1,0 +1,10 @@
+<launch>
+    <arg name="pubRate" default="5" />
+
+    <node pkg="beginner_tutorials" name="talker" type="talker" args="$(arg pubRate)" output="screen">
+        <!--param name="pubRate" value="$(arg pubRate)" -->
+    </node>
+
+    <node pkg="beginner_tutorials" name="listener" type="listener" output="screen"/>
+
+</launch>
