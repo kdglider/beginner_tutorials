@@ -30,12 +30,15 @@ bool printString(beginner_tutorials::printString::Request  &req, beginner_tutori
 int main(int argc, char **argv) {
     ros::init(argc, argv, "talker");
 
+    // Record publishing rate input from user (Hz)
+    int pubRate = atoi(argv[1]);
+
     // Create node handle and publisher to publish to chatter topic
     ros::NodeHandle n;
     ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 
-    // Set publishing rate to 10 Hz
-    ros::Rate loop_rate(10);
+    // Set publishing rate 
+    ros::Rate loop_rate(pubRate);
 
     ros::ServiceServer service = n.advertiseService("printString", printString);
     beginner_tutorials::printString srv;
