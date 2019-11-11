@@ -58,11 +58,11 @@ int main(int argc, char **argv) {
     static tf::TransformBroadcaster tfbr;
 
     // Create static transform to broadcast
-    tf::Transform frame1;
-    frame1.setOrigin(tf::Vector3(1, 2, 3));
+    tf::Transform talk;
+    talk.setOrigin(tf::Vector3(1, 2, 3));
     tf::Quaternion q;
     q.setRPY(0, 0, M_PI/4);
-    frame1.setRotation(q);
+    talk.setRotation(q);
 
     // Counter to keep track of the number of published messages
     int count = 0;
@@ -82,8 +82,8 @@ int main(int argc, char **argv) {
         // Publish message
         chatter_pub.publish(msg);
 
-        // Broadcast frame1 transform
-        tfbr.sendTransform(tf::StampedTransform(frame1, ros::Time::now(), "world", "frame1"));
+        // Broadcast talk transform
+        tfbr.sendTransform(tf::StampedTransform(talk, ros::Time::now(), "world", "talk"));
 
         ros::spinOnce();
 
