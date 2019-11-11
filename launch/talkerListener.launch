@@ -1,11 +1,21 @@
 <launch>
-    <!--Allow user to enter publishing rate-->
-    <arg name="pubRate" default="5" />
+    <!--Allow user to enter publishing rate and toggle rosbag recording-->
+    <arg name="pubRate" default="1" />
+    <arg name="record" default="false" />
 
     <!--Launch talker and output to terminal-->
-    <node pkg="beginner_tutorials" name="talker" type="talker" args="$(arg pubRate)" output="screen"/>
+    <node pkg="beginner_tutorials" type="talker" name="talker" args="$(arg pubRate)" output="screen" />
 
     <!--Launch listener and output to terminal-->
-    <node pkg="beginner_tutorials" name="listener" type="listener" output="screen"/>
+    <node pkg="beginner_tutorials" type="listener" name="listener" output="screen" />
+
+    <!--Launch rosbag recording if requested by the user. Record all topics for 15s.-->
+    <node
+        if="$(arg record)" 
+        pkg="rosbag" 
+        type="record"
+        name="rosbagRecord" 
+        args="--all --duration=15 --output-name=/home/kevin/Workspaces/ENPM808X/catkin_ws/src/beginner_tutorials/results/output.bag"
+    />
 
 </launch>
