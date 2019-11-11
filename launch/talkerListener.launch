@@ -15,7 +15,7 @@
         pkg="rosbag" 
         type="record"
         name="rosbagRecord" 
-        args="--all --duration=15 --output-name=/home/kevin/Workspaces/ENPM808X/catkin_ws/src/beginner_tutorials/results/output.bag"
+        args="--all --duration=15 --output-name=$(find beginner_tutorials)/results/output.bag"
     />
 
 </launch>
