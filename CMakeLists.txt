@@ -4,7 +4,8 @@ project(beginner_tutorials)
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
 
-find_package(catkin REQUIRED COMPONENTS
+find_package(
+    catkin REQUIRED COMPONENTS
     roscpp
     rospy
     std_msgs
@@ -46,3 +47,9 @@ add_dependencies(talker beginner_tutorials_generate_messages_cpp)
 add_executable(listener src/listener.cpp)
 target_link_libraries(listener ${catkin_LIBRARIES})
 add_dependencies(listener beginner_tutorials_generate_messages_cpp)
+
+if(CATKIN_ENABLE_TESTING)
+    find_package(rostest REQUIRED)
+    add_rostest_gtest(serviceTest launch/serviceTest.test test/test.cpp)
+    target_link_libraries(serviceTest ${catkin_LIBRARIES})
+endif()

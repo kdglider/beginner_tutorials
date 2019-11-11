@@ -1,0 +1,7 @@
+<launch>
+    <!--Launch talker-->
+    <node pkg="beginner_tutorials" name="talker" type="talker" args="1" output="screen" />
+
+    <!--Launch serviceTest test node-->
+    <test pkg="beginner_tutorials" test-name="serviceTest" type="serviceTest" time-limit="10.0" />
+</launch>

@@ -1,6 +1,7 @@
-/**Copyright (c) 2019   Hao Da (Kevin) Dong
+/**
+ * Copyright (c) 2019   Hao Da (Kevin) Dong
  * @file       listener.cpp
- * @date       10/27/2019
+ * @date       2019/11/10
  * @brief      Simple ROS subscriber from the beginner tutorials
  * @license    This project is released under the BSD-3-Clause License. See full details in LICENSE.
  */
