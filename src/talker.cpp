@@ -6,8 +6,10 @@
  */
 
 #include <sstream>
-#include "std_msgs/String.h"
+#include <math.h>
 #include "ros/ros.h"
+#include "std_msgs/String.h"
+#include <tf/transform_broadcaster.h>
 #include "beginner_tutorials/printString.h"
 
 // String that will be published and modified by the printString service
@@ -52,6 +54,16 @@ int main(int argc, char **argv) {
     // Create service and advertise it over ROS
     ros::ServiceServer service = n.advertiseService("printString", printString);
 
+    // Create transform broadcaster
+    static tf::TransformBroadcaster tfbr;
+
+    // Create static transform to broadcast
+    tf::Transform frame1;
+    frame1.setOrigin(tf::Vector3(1, 2, 3));
+    tf::Quaternion q;
+    q.setRPY(0, 0, M_PI/4);
+    frame1.setRotation(q);
+
     // Counter to keep track of the number of published messages
     int count = 0;
 
@@ -69,6 +81,9 @@ int main(int argc, char **argv) {
 
         // Publish message
         chatter_pub.publish(msg);
+
+        // Broadcast frame1 transform
+        tfbr.sendTransform(tf::StampedTransform(frame1, ros::Time::now(), "world", "frame1"));
 
         ros::spinOnce();
 
